@@ -18,6 +18,12 @@ export default function Form() {
       return {...task, onEdit: false}
     }));
   }
+  const cancelTask = async () => {
+    const tasks = await axios.get('http://localhost:3000/tasks');
+    setTasks(tasks.data.map(task => {
+      return {...task, onEdit: false}
+    }));
+  }
   const deleteTask = async (idx) => {
     const tasks = await axios.delete(`http://localhost:3000/tasks/${idx}`);
     setTasks(tasks.data.map(task => {
@@ -40,7 +46,7 @@ export default function Form() {
         <input id="task" name="task" value={formData.task} onChange={updateForm} />
         <button onClick={insertTask}>Submit</button>
       </form>
-      <TaskList tasks={tasks} setTasks={setTasks} deleteTask={deleteTask} editTaskUi={editTaskUi}/>
+      <TaskList tasks={tasks} setTasks={setTasks} deleteTask={deleteTask} editTaskUi={editTaskUi} cancelTask={cancelTask}/>
     </>
   )
 }
